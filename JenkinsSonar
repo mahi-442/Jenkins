@@ -16,6 +16,22 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('upload to nexus') {
+            steps {
+
+                nexusArtifactUploader artifacts: [[artifactId: 'hue', classifier: '', file: 'target/hue.war', type: 'war']], 
+                credentialsId: 'Nexus', 
+                groupId: 'in.javahome', 
+                nexusUrl: '172.31.44.96:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'http://3.139.90.238:8081/repository/hue-release/', 
+                version: '1.0-RELEASE'
+
+            }
+
+
+        }
     }
 
 }
