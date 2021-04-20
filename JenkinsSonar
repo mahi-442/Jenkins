@@ -35,7 +35,14 @@ pipeline {
 
 
             }
+        stage('Publish To SonarQube') {
+            steps{
+                withSonarQubeEnv('sonar7') {
+                    sh 'mvn clean package sonar:sonar'
+                }
 
+            }
+        }
 
         }
     }
