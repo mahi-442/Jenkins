@@ -37,6 +37,18 @@ pipeline {
             }
 
         }
+        stage('deploy to Nexus') {
+            steps{
+                sshagent(['tomcat8-1']) {
+                    // copy war file to tomcat webapps
+                    sh "scp -o StrictHostKeyChecking=no /target/*.war ec2-user@172.31.19.151:/opt/tomcat8/webapps/hue.war"
+                    // stop and start the tomcat
+                    sh "ssh ec2-user@172.31.19.151 /opt/tomcat8/bin/shutdown.sh"
+                    sh "ssh ec2-user@172.31.19.151 /opt/tomcat8/bin/startup.sh"
+            }
+
+            }
+        }
         stage('publish to sonarqube') {
             steps {
                 withSonarQubeEnv('sonar7') {
