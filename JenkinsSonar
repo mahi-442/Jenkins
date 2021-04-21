@@ -37,7 +37,7 @@ pipeline {
             }
 
         }
-        stage('deploy to Nexus') {
+        stage('deploy to tomcat8') {
             steps{
                 sshagent(['tomcat8-1']) {
                     // copy war file to tomcat webapps
