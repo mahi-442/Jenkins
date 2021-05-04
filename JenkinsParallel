@@ -9,12 +9,12 @@ pipeline {
 
         stage('parallel blocks') {
             parallel{
-                stage(maven build) {
+                stage('maven build') {
                     steps {
                         sh "mvn clean package"
                     }
                 }
-                stage(sonar7) {
+                stage('sonar7') {
                     withSonarQubeEnv('sonar7') {
                         sh 'mvn sonar:sonar'
                     }
